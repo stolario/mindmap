@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>MindMap</title>
+  <link rel="stylesheet" href="styles.css?v=41">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="MindMap — home" data-i18n-aria-label="mindmapHome">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M9 9h5v5H9zM19 4h5v5h-5zM20 21h5v5h-5zM4 21h5v5H4z"/><path d="M14 11.5 19 7M14 13l7 9M9 23.5h11M9 21l3-7"/></svg></span>
+        <span class="brand-copy"><strong>MindMap</strong></span>
+      </a>
+      <div class="map-title-wrap"><span class="title-caption" data-i18n="currentMap">CURRENT MAP</span><input id="mapTitle" class="map-title" value="Моя карта идей" aria-label="Map title" maxlength="80" data-i18n-aria-label="mapTitle"></div>
+      <div class="top-actions">
+        <label class="language-label" for="languagePicker"><span class="sr-only">Language</span><select id="languagePicker" aria-label="Language" data-i18n-aria-label="language"><option value="en">English</option><option value="uk">Українська</option><option value="ru">Русский</option></select></label>
+        <span id="saveStatus" class="save-status" title="The map is stored only in this tab’s memory and will be lost when the page reloads. Save it manually as JSON." data-i18n-title="theMapIsStoredOnly"><i></i>Unsaved</span>
+        <button id="openButton" class="button button-quiet" title="Open map from JSON" data-i18n-title="openMapFromJson"><svg viewBox="0 0 24 24"><path d="M3 7.5A1.5 1.5 0 0 1 4.5 6H10l2 2h7.5A1.5 1.5 0 0 1 21 9.5v1H5.2L3 18V7.5Z"/><path d="M5.2 10.5H21l-2.1 7.2a1.7 1.7 0 0 1-1.6 1.3H4.7A1.7 1.7 0 0 1 3 17.3l2.2-6.8Z"/></svg><span data-i18n="open">Open</span></button>
+        <button id="saveButton" class="button button-primary" title="Save map as JSON" data-i18n-title="saveMapAsJson"><svg viewBox="0 0 24 24"><path d="M5 3h12l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M7 3v6h10V3M7 21v-7h10v7"/></svg><span data-i18n="save">Save</span></button>
+        <button id="settingsButton" class="icon-button" aria-label="SETTINGS" title="SETTINGS" data-i18n-title="settings" data-i18n-aria-label="settings"><svg viewBox="0 0 24 24"><path d="M4 21v-7m0-4V3m8 18v-9m0-4V3m8 18v-5m0-4V3M2 14h4m4-6h4m4 8h4"/></svg></button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="left-rail" aria-label="Map tools" data-i18n-aria-label="mapTools">
+        <button id="addChildButton" class="rail-button rail-add" title="Add child node (Enter)" data-i18n-title="addChildNodeEnter"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Add<br>branch</span></button>
+        <div class="rail-divider"></div>
+        <button id="addSiblingButton" class="rail-button" title="Add a sibling node" data-i18n-title="addASiblingNode"><svg viewBox="0 0 24 24"><path d="M5 7h8m-8 5h14m-14 5h8M16 5l3 2-3 2m-5 8 3 2-3 2"/></svg><span data-i18n="sibling">Sibling</span></button>
+        <button id="deleteButton" class="rail-button" title="Delete selected node (Delete)" data-i18n-title="deleteSelectedNodeDelete"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg><span data-i18n="delete">delete</span></button>
+        <div class="rail-spacer"></div>
+        <fieldset id="mapMode" class="rail-mode" aria-label="STRUCTURE" data-i18n-aria-label="structure">
+          <div class="mode-segments">
+            <label class="mode-option" title="Hierarchical structure" data-i18n-title="hierarchicalStructure"><input type="radio" name="mapMode" value="hierarchical" checked><span data-i18n="hierarchical"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4m-6 4v-4h12v4"/></svg>Hierarchical</span></label>
+            <label class="mode-option" title="Freeform structure" data-i18n-title="freeformStructure"><input type="radio" name="mapMode" value="free"><span data-i18n="freeform"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="6" r="3"/><circle cx="19" cy="5" r="3"/><circle cx="14" cy="19" r="3"/><path d="m8 6 8-1M7 9l5 7m5-8-2 8"/></svg>Freeform</span></label>
+          </div>
+        </fieldset>
+        <label class="rail-select" title="Map background style" data-i18n-title="mapBackgroundStyle"><svg viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 12h16M12 4v16"/></svg><select id="backgroundStyle" aria-label="Map background style" data-i18n-aria-label="mapBackgroundStyle"><option value="plain" data-i18n="plain">Plain</option><option value="wash" data-i18n="glow">Glow</option><option value="gradient" data-i18n="gradient">Gradient</option><option value="grid" data-i18n="grid">Grid</option></select></label>
+        <button id="view3dButton" class="rail-button" title="3D view: the map rotates full screen like a screensaver" data-i18n-title="view3dTooltip"><svg viewBox="0 0 24 24"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg><span>3D View</span></button>
+        <button id="layoutButton" class="rail-button" title="Arrange nodes automatically" data-i18n-title="arrangeNodesAutomatically"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4m-6 4v-2h12v2"/></svg><span data-i18n="arrange">Arrange</span></button>
+        <button id="newButton" class="rail-button rail-new" title="Create a new map" data-i18n-title="createANewMap"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span data-i18n="newMap">New map</span></button>
+      </aside>
+
+      <section class="board" id="board" aria-label="Mind map canvas" data-i18n-aria-label="mindMapCanvas">
+        <div class="board-wash"></div>
+        <div class="board-topline"><label class="search-box"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m16 16 4 4"/></svg><input id="searchInput" placeholder="Find a node…" aria-label="Find a node" data-i18n-aria-label="findANode2" data-i18n-placeholder="findANode"><kbd>⌘ K</kbd></label><span class="board-hint"></span></div>
+        <div class="viewport" id="viewport">
+          <div class="world" id="world">
+            <div class="view3d-floor" id="view3dFloor" aria-hidden="true"></div>
+            <svg class="connections" id="connections" aria-hidden="true"></svg>
+            <div id="nodesLayer" class="nodes-layer"></div>
+          </div>
+        </div>
+        <div class="zoom-control"><button id="zoomOut" aria-label="Zoom out" data-i18n-aria-label="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn" aria-label="Zoom in" data-i18n-aria-label="zoomIn">+</button><span class="zoom-separator"></span><button id="fitButton" class="fit-button" title="Fit map to view" data-i18n-title="fitMapToView" data-i18n="fit">Fit</button></div>
+        <div id="view3dOverlay" class="view3d-overlay" hidden><span data-i18n="clickOrPressEscTo">Click or press Esc to exit</span></div>
+        <div id="emptyHint" class="empty-hint" hidden><span class="empty-icon">✳</span><strong data-i18n="addYourFirstIdea">Add your first idea</strong><span data-i18n="clickAddBranchOrPress">Click “Add branch” or press Enter</span></div>
+      </section>
+
+      <aside class="editor" id="editor" aria-label="Node editor" data-i18n-aria-label="nodeEditor">
+        <div class="editor-head"><div><span id="editorKicker" class="editor-kicker" data-i18n="properties">PROPERTIES</span><h2 id="editorTitle" data-i18n="mapNode">Map node</h2></div><button id="closeEditor" class="icon-button editor-close" aria-label="Close panel" data-i18n-aria-label="closePanel"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+        <div id="editorContent" class="editor-content">
+          <label class="field-label" for="nodeText" data-i18n="title">Title</label>
+          <textarea id="nodeText" class="title-input" rows="2" maxlength="160"></textarea>
+          <fieldset id="nodeTitleAlign" class="mode-picker align-picker"><legend class="field-label" data-i18n="titleAlignment">Title alignment</legend><div class="mode-segments">
+            <label class="mode-option"><input type="radio" name="nodeTitleAlign" value="left"><span data-i18n="left">Left</span></label>
+            <label class="mode-option"><input type="radio" name="nodeTitleAlign" value="center"><span data-i18n="center">Center</span></label>
+            <label class="mode-option"><input type="radio" name="nodeTitleAlign" value="right"><span data-i18n="right">Right</span></label>
+          </div></fieldset>
+          <div class="field-row"><label class="field-label" for="nodeTitleFontSize" data-i18n="titleFontSizePx">Title font size, px</label><input id="nodeTitleFontSize" class="width-input" type="number" min="6" max="48" step="1" value="12"></div>
+          <div class="field-row"><label class="field-label" for="nodeColor" data-i18n="branchColor">Branch color</label><input id="nodeColor" type="color" value="#2286ab" aria-label="Branch color" data-i18n-aria-label="branchColor"></div>
+          <div id="nodeLeftStripeRow" class="field-row"><label class="field-label" for="nodeShowLeftStripe" data-i18n="coloredStripeOnTheLeft">Colored stripe on the left</label><input id="nodeShowLeftStripe" class="toggle-input" type="checkbox" checked></div>
+          <div id="nodeRightStripeRow" class="field-row"><label class="field-label" for="nodeShowRightStripe" data-i18n="coloredStripeOnTheRight">Colored stripe on the right</label><input id="nodeShowRightStripe" class="toggle-input" type="checkbox"></div>
+          <div class="field-row"><label class="field-label" for="nodeBackgroundColor" data-i18n="nodeBackgroundColor">Node background color</label><input id="nodeBackgroundColor" type="color" value="#ffffff" aria-label="Node background color" data-i18n-aria-label="nodeBackgroundColor"></div>
+          <button id="resetNodeBackgroundColor" class="reset-setting" type="button" data-i18n="resetToDefaultColor">Reset to default color</button>
+          <div class="field-row"><label class="field-label" for="nodeExtraWidthOwn" data-i18n="extraNodeWidthPx">Extra node width, px</label><input id="nodeExtraWidthOwn" class="width-input" type="number" min="-200" max="1000" step="2" value="0"></div>
+          <div class="field-row"><label class="field-label" for="nodeExtraHeightOwn" data-i18n="extraNodeHeightPx">Extra node height, px</label><input id="nodeExtraHeightOwn" class="width-input" type="number" min="-200" max="1000" step="2" value="0"></div>
+          <div class="field-row"><label class="field-label" for="nodeBorderWidth" data-i18n="borderWidthPx">Border width, px</label><input id="nodeBorderWidth" class="width-input" type="number" min="0.5" max="20" step="0.1" value="1.7"></div>
+          <div class="field-label notes-label" data-i18n="notes">Notes</div>
+          <textarea id="nodeNotes" class="notes-input" rows="5" maxlength="2000" placeholder="Add context, details, or questions…" data-i18n-placeholder="addContextDetailsOrQuestions"></textarea>
+          <fieldset id="nodeNotesAlign" class="mode-picker align-picker"><legend class="field-label" data-i18n="notesAlignment">Notes alignment</legend><div class="mode-segments">
+            <label class="mode-option"><input type="radio" name="nodeNotesAlign" value="left"><span data-i18n="left">Left</span></label>
+            <label class="mode-option"><input type="radio" name="nodeNotesAlign" value="center"><span data-i18n="center">Center</span></label>
+            <label class="mode-option"><input type="radio" name="nodeNotesAlign" value="right"><span data-i18n="right">Right</span></label>
+          </div></fieldset>
+          <div class="field-row"><label class="field-label" for="nodeNotesFontSize" data-i18n="notesFontSizePx">Notes font size, px</label><input id="nodeNotesFontSize" class="width-input" type="number" min="6" max="48" step="1" value="10"></div>
+          <div class="image-section"><div class="field-label" data-i18n="image">Image</div><label class="image-picker" for="imageInput"><span class="image-plus">＋</span><span><strong data-i18n="addImage">Add image</strong><small data-i18n="pngJpgOrWebpUp">PNG, JPG, or WebP · up to 12 MB</small></span></label><input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden><div id="imagePreview" class="image-preview" hidden></div></div>
+          <section id="nodeLinksSection" class="node-links-section" hidden><div class="field-label" data-i18n="nodeLinks">Node links</div><button id="connectNodeButton" class="button button-quiet" type="button" data-i18n="connectToAnotherNode">Connect to another node</button><div id="nodeLinksList" class="node-links-list"></div></section>
+          <div class="editor-tip" data-i18n="theImageIsStoredIn"><span>↳</span>The image is stored in the map’s JSON file.</div>
+        </div>
+        <div id="linkEditorContent" class="editor-content" hidden>
+          <div class="link-endpoints"><div><strong>A</strong><span id="linkSourceName"></span></div><div><strong>B</strong><span id="linkTargetName"></span></div></div>
+          <fieldset id="linkDirection" class="mode-picker"><legend class="field-label" data-i18n="linkDirection">Link direction</legend><div class="mode-segments">
+            <label class="mode-option"><input type="radio" name="linkDirection" value="forward"><span>A → B</span></label>
+            <label class="mode-option"><input type="radio" name="linkDirection" value="reverse"><span>A ← B</span></label>
+            <label class="mode-option"><input type="radio" name="linkDirection" value="both"><span>A ↔ B</span></label>
+          </div></fieldset>
+          <div class="field-row"><label class="field-label" for="linkColor" data-i18n="linkColor">Link color</label><input id="linkColor" type="color" value="#a0a3b0" aria-label="Link color" data-i18n-aria-label="linkColor"></div>
+          <div class="field-row"><label class="field-label" for="linkWidth" data-i18n="linkWidthPx">Link width, px</label><input id="linkWidth" class="width-input" type="number" min="0.5" max="20" step="0.1" value="1.7"></div>
+          <button id="deleteLinkButton" class="button delete-link-button" type="button" data-i18n="deleteLink">Delete link</button>
+        </div>
+        <div id="settingsContent" class="settings-content" hidden>
+          <p class="settings-description" data-i18n="customizeTheAppearanceOfMap">Customize the appearance of map elements.</p>
+          <div class="field-row"><label class="field-label" for="allNodeBorderWidth" data-i18n="allBordersPx">All borders, px</label><input id="allNodeBorderWidth" class="width-input" type="number" min="0.5" max="20" step="0.1" value="1.7"></div>
+          <div class="field-row"><label class="field-label" for="nodeExtraWidth" data-i18n="extraNodeWidthPx2">Extra node width, px</label><input id="nodeExtraWidth" class="width-input" type="number" min="-200" max="1000" step="2" value="0"></div>
+          <div class="field-row"><label class="field-label" for="nodeExtraHeight" data-i18n="extraNodeHeightPx2">Extra node height, px</label><input id="nodeExtraHeight" class="width-input" type="number" min="-200" max="1000" step="2" value="0"></div>
+          <div class="field-row"><label class="field-label" for="allLinkWidth" data-i18n="allLinksPx">All links, px</label><input id="allLinkWidth" class="width-input" type="number" min="0.5" max="20" step="0.1" value="1.7"></div>
+          <p class="settings-description" data-i18n="changesHereApplyToThe">Changes here apply to the whole map and new elements. Set individual values in a node’s or link’s properties.</p>
+          <p class="settings-description" data-i18n="alignmentHereAppliesToAll">Alignment here applies to all nodes. Change it for a single node in that node’s properties.</p>
+          <fieldset id="titleAlign" class="mode-picker align-picker"><legend class="field-label" data-i18n="titleAlignment">Title alignment</legend><div class="mode-segments">
+            <label class="mode-option"><input type="radio" name="titleAlign" value="left"><span data-i18n="left">Left</span></label>
+            <label class="mode-option"><input type="radio" name="titleAlign" value="center" checked><span data-i18n="center">Center</span></label>
+            <label class="mode-option"><input type="radio" name="titleAlign" value="right"><span data-i18n="right">Right</span></label>
+          </div></fieldset>
+          <fieldset id="notesAlign" class="mode-picker align-picker"><legend class="field-label" data-i18n="notesAlignment">Notes alignment</legend><div class="mode-segments">
+            <label class="mode-option"><input type="radio" name="notesAlign" value="left" checked><span data-i18n="left">Left</span></label>
+            <label class="mode-option"><input type="radio" name="notesAlign" value="center"><span data-i18n="center">Center</span></label>
+            <label class="mode-option"><input type="radio" name="notesAlign" value="right"><span data-i18n="right">Right</span></label>
+          </div></fieldset>
+          <p class="settings-description" data-i18n="backgroundAndFontSizeHere">Background and font size here apply to all nodes; change them for a single node in its properties. The hierarchy root keeps its own background color, and its title is 2 px larger.</p>
+          <label class="field-label" for="allNodeBackgroundColor" data-i18n="nodeBackgroundColor2">Node background color</label>
+          <div class="setting-control-row"><input id="allNodeBackgroundColor" type="color" value="#ffffff" aria-label="Node background color" data-i18n-aria-label="nodeBackgroundColor2"><code id="allNodeBackgroundColorValue">#FFFFFF</code></div>
+          <button id="resetAllNodeBackgroundColor" class="reset-setting" type="button" data-i18n="resetToDefaultColor">Reset to default color</button>
+          <div class="field-row"><label class="field-label" for="allTitleFontSize" data-i18n="titleFontSizePx2">Title font size, px</label><input id="allTitleFontSize" class="width-input" type="number" min="6" max="48" step="1" value="12"></div>
+          <div class="field-row"><label class="field-label" for="allNotesFontSize" data-i18n="notesFontSizePx">Notes font size, px</label><input id="allNotesFontSize" class="width-input" type="number" min="6" max="48" step="1" value="10"></div>
+          <label class="field-label" for="backgroundColor" data-i18n="mapBackgroundColor">Map background color</label>
+          <div class="setting-control-row"><input id="backgroundColor" type="color" value="#f7f8fc" aria-label="Map background color" data-i18n-aria-label="mapBackgroundColor"><code id="backgroundColorValue">#F7F8FC</code></div>
+          <button id="resetBackgroundColor" class="reset-setting" type="button" data-i18n="resetToDefaultBackground">Reset to default background</button>
+        </div>
+        <div id="noSelection" class="no-selection" hidden><span class="no-selection-icon">⌖</span><strong data-i18n="selectANode">Select a node</strong><span data-i18n="clickANodeToEdit">Click a node to edit its text, notes, or image.</span></div>
+        <div class="editor-foot"><span class="key-hint" data-i18n="newBranch"><kbd>Enter</kbd> new branch</span><span class="key-hint" data-i18n="deleteLower"><kbd>Del</kbd> delete</span></div>
+      </aside>
+    </main>
+  </div>
+  <input id="jsonInput" type="file" accept="application/json,.json" hidden>
+  <input id="imageQuickInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+  <div id="nodeContextMenu" class="node-context-menu" role="menu" aria-label="Map context menu" tabindex="-1" hidden data-i18n-aria-label="mapContextMenu">
+    <button id="contextAddRootButton" type="button" role="menuitem" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg><span data-i18n="addANewRootNode">Add a new root node</span></button>
+    <button id="contextAddChildButton" type="button" role="menuitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h6v6H5zM15 13h6v6h-6zM11 8h4a2 2 0 0 1 2 2v3M17 13v6m-3-3h6"/></svg><span data-i18n="addAChildNode">Add a child node</span></button>
+    <button id="contextConnectButton" type="button" role="menuitem" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-2 2M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l2-2"/></svg><span data-i18n="connectToAnotherNode">Connect to another node</span></button>
+    <button id="contextDeleteLinkButton" type="button" role="menuitem" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg><span data-i18n="deleteLink">Delete link</span></button>
+    <button id="contextDeleteButton" type="button" role="menuitem"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"/></svg><span data-i18n="delete">delete</span></button>
+  </div>
+  <div id="confirmDialog" class="confirm-overlay" role="alertdialog" aria-modal="true" aria-describedby="confirmMessage" hidden>
+    <div class="confirm-box"><p id="confirmMessage"></p><div class="confirm-actions"><button id="confirmCancel" class="button button-quiet" type="button" data-i18n="cancel">Cancel</button><button id="confirmOk" class="button confirm-danger" type="button" data-i18n="delete">delete</button></div></div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="i18n.js?v=2"></script>
+  <script src="app.js?v=41"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
